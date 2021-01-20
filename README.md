@@ -1,46 +1,42 @@
-# Getting Started with Create React App
+### react
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## 创建项目
 
-## Available Scripts
+npx create-react-app hook-ts-demo --template typescript
 
-In the project directory, you can run:
+### hooks
 
-### `npm start`
+1. useState 生成响应式数据
+2. useEffect (React 会保存你传递的函数（我们将它称之为 “effect”），并且在执行 DOM 更新之后调用它)
+   useEffect 的第二参数 是绑定一个参数 或者多个参数 这个参数变化才执行操作
+   useEffect 可以返回一个函数 可以实现清除机制
+   useEffect 可以理解为于vue的 watch 功能
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+3.Hook 使用规则
+✅ 在 React 的函数组件中调用 Hook
+✅ 在自定义 Hook 中调用其他 Hook
+❌不要在循环，条件或嵌套函数中调用 Hook
+4. 自定义hook
+   ✅dui自定义 Hook 必须以 “use” 开头
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+   ❌在两个组件中使用相同的 Hook 会共享 state
 
-### `npm test`
+5. useContext
+   1. 帮助我们跨越组件层级直接传递变量，实现共享
+   2. 父组件传子组件
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+6. useReducer
+  1.类似reducer
+  2。配合useContext可实现全局数据共享
 
-### `npm run build`
+7. useRef
+   1. 获取ref的组件
+   2. 它还相当于 this , 可以存放任何变量，很好的解决闭包带来的不方便性。
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+8. useMemo（比useEffect更细腻）
+   1. useMemo 的函数会在渲染期间执行
+   2. useMemo可以减少页面开销提高性能
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+9.useCallback
+  1.  useCallback 返回的是函数
+  2.  useCallback和React.memo必须结合使用
