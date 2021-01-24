@@ -57,6 +57,7 @@ const Article:React.FC<ArticleInfo> = ({ title, content }) => {
  * useReducer组件
  */
 const User = () => {
+  console.log("我是day的我加载了")
   type StateType = {
     count: number,
     name:string
@@ -234,10 +235,12 @@ const Show:React.FC<Data> = ({ time, children }) => {
     return new Date(time).toISOString()
   }
   const newTime: string = useMemo(() => {
+    console.log("useMemo")
+    
     return changeTime(time)
   }, [time])
   useEffect(()=>{
-    console.log("124")
+    console.log("useEffect")
   },[time])
   
   return (
@@ -252,22 +255,24 @@ const Show:React.FC<Data> = ({ time, children }) => {
  * useCallback组件
  */
 const UseRefDemof = () => {
+  console.log("我是首页我加载了")
     const [text, updateText] = useState('初始值');
     const textRef = useRef<string | null>();
-
     useEffect(() => {
       textRef.current = text; 
+      const dom = document.getElementById("map");
+      console.log(dom);
     });
-
     const handleSubmit = useCallback(() => {
       const currentText = textRef.current; 
       alert(currentText);
     }, [textRef]); 
-
+    const dom = document.getElementById("map");
+    console.log(dom);
     return (
       <div className="component">
         <Title title="useCallback"/>
-        <span>父组件：</span>
+        <span id="map">父组件：</span>
         <input value={text} onChange={e => updateText(e.target.value)} />
         <ExpensiveTree onSubmit={handleSubmit} />
       </div>
@@ -277,7 +282,6 @@ interface Eprops {
     onSubmit: any
 }
 const ExpensiveTree:SFC<Eprops>  = React.memo(({onSubmit}) => {
-    console.log('子组件渲染');
     return (
         <div>
             <span>子组件：</span>
