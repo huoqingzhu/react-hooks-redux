@@ -1,38 +1,42 @@
-import React,{useState,useEffect} from 'react'
-import '../App.css';
+import React,{useState} from 'react'
+import '../App.scss';
 import {Title} from "./Counter"
 import { useHistory } from 'react-router-dom';
 
-const Tab = () => {
-  const [type, setType] = useState<string>("day");
+const Head = () => {
+  const [type, setType] = useState<string>("day"); 
+  const routr:any=localStorage.getItem("router");
+  
   const style=(value:string):{backgroundColor:string}|undefined=>{
     return  value==="day"
-            ?(type==="day"?{backgroundColor:"pink"}:undefined)
+            ?(type==="day"?{backgroundColor:"pink"}:{backgroundColor:"pink"})
             :value==="week"
-              ?(type==="week"?{backgroundColor:"pink"}:undefined)
-              :(type==="year"?{backgroundColor:"pink"}:undefined)
+              ?(type==="week"?{backgroundColor:"pink"}:{backgroundColor:"pink"})
+              :(type==="year"?{backgroundColor:"pink"}:{backgroundColor:"pink"})
   }
   let history = useHistory();
-  useEffect(() => {
-    console.log(history)
-  })
+
   const tabChange=(value:string):void=>{
     setType(value)
-
-    // console.log(`/${value}`);
-    console.log(history)
-    history.push(`/${value}`)
+    console.log(value)
+    history.push(`${value}`)
     
   }
   return (
     <div className="component">
       <Title title="Tab切换"></Title>
       <div className="tab">
-        <div className={"tabs"} style={style("day")}  onClick={()=>tabChange("day")}>日</div>
-        <div className={"tabs"} style={style("week")} onClick={()=>tabChange("week")}>周</div>
-        <div className={"tabs"} style={style("year")} onClick={()=>tabChange("year")}>月</div>
+        {JSON.parse(routr).map((item:{path:string})=>{
+          return <div 
+          className={"tabs"}
+          style={style(item.path)}
+          onClick={()=>tabChange(`${item.path}`)}
+          key={item.path}>
+            {item.path}
+          </div>
+        })}
       </div>
     </div>
   )
 }
-export default Tab
+export default Head

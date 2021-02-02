@@ -45,3 +45,44 @@ npx create-react-app hook-ts-demo --template typescript
 ### routr
 
 npm i -S react-router-dom react-helmet
+<!-- 配置路由懒加载 -->
+npm i react-loadable --save
+
+### router hooks api
+
+1. useHistory(path)//路由跳转
+2. useParams //获取当前路由参数params,路由path 要设置params 参数  url访问也要带参数
+3. useLocation 返回当前路由和路由参数
+4. useRouteMatch 获取当前路由参数params 路由path 可以不设置参数
+
+### react 打包配置
+
+npm run eject 弹出webpack 打包配置文件
+npm i @types/webpack-env -D
+
+### 安装axios
+
+npm i -s axios
+
+### 配置代理
+
+在package.json 配置
+最新的react脚手架只支持字符串配置
+"proxy":"http://123.56.85.24:5000",
+
+### 引入ant npm
+
+npm i antd --save
+npm i --save @ant-design/icons
+配置按需引入
+npm install babel-plugin-import --save--dev
+[
+                    "import",
+                    { libraryName: "antd", style: "css" }
+   ]
+
+### webpack 打包优化
+
+npm install webpack-bundle-analyzer -D
+在与module 平级的plugins配置
+ new BundleAnalyzerPlugin({ analyzerPort: 9000 }),

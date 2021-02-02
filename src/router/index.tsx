@@ -1,33 +1,37 @@
 // routes/index.jsx
-import React from 'react'
-import { HashRouter as Router, Route, Switch, Redirect } from 'react-router-dom'
-import {Counter,User,FriendStatus,CounterReducer,CounterRef,Example,UseRefDemof} from "../view/Counter"
-import Tab from '../view/tab'
-// const loadRoutes = (files: __WebpackModuleApi.RequireContext) =>
-//   files
-//     .keys()
-//     .reduce((arr, key) => {
-//       const routes = files(key).default;
-//       return typeof routes === "object" ? arr.concat(routes) : arr;
-//     }, [])
-//     .sort((prev, next) => (prev || 0) - (next || 0));
-// const children = loadRoutes(require.context("./home", false, /\.ts$/));
+import React,{Suspense,lazy,useEffect,useContext}from 'react'
+import { HashRouter as Router, Route, Switch, Redirect,useHistory} from 'react-router-dom'
+import Head from '../components/head/head'//导航栏
+// const Login=lazy(()=>import("../view/login/index"))
+import {CountContext} from "../App"
+// require.context加载文件生成路由配置
+const loadRoutes = (files: __WebpackModuleApi.RequireContext) =>
+  files
+    .keys()
+    .reduce((arr, key) => {
+      const routes = files(key).default;
+      return typeof routes === "object" ? arr.concat(routes) : arr;
+    }, [])
+    .sort((prev:{sort:number}, next:{sort:number}) => {
+      return prev.sort-next.sort//根据sort 排序
+    });
+const children = loadRoutes(require.context("./home", false, /\.tsx$/));
 const RouteConfig = () => {
+  const store:any = useContext(CountContext) 
+  const History= useHistory()
   return (
     <Router>
-      <Router>
-        <Tab></Tab>
-      </Router>
-      <Router>
+    <Head cx={CountContext}></Head>
+      <Suspense fallback={<div>Loading...</div>}>
       <Switch>
-          <Route path="/home" component={ UseRefDemof }></Route>
-          <Route path="/day"  component={ User }></Route>
-          <Route path="/week" component={ FriendStatus}></Route>
-          <Route path="/year" component={ CounterReducer}></Route>
-          <Redirect to="/home" from="/"></Redirect>
-      </Switch>
-    </Router>
-    </Router>
+          {children.map((item:any)=>{
+            return <Route path={item.path} component={item.component} key={item.path}></Route>
+            })}
+          <Redirect to="/home/main" from="/home"></Redirect>
+        </Switch>
+      </Suspense>
+{/* <Route path="/login"  component={ Head }></Route> */}
+</Router>
   )
 }
-export default RouteConfig
+export {RouteConfig,children}

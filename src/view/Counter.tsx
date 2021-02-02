@@ -1,6 +1,6 @@
 import { spawn } from 'child_process';
 import React, { useState,useEffect,createContext,useContext,useReducer,useRef,useMemo,useCallback, SFC} from 'react'
-import '../App.css';
+import '../App.scss';
 import useFriendStatus from "../hooks/useFriendStatus"
 // 标题组件
 const Title:React.FC<{title:string}>=({title="我是标题"})=>{

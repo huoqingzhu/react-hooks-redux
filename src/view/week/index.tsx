@@ -1,34 +1,55 @@
-import React, { useState} from 'react'
+import React, { useState,useReducer,useEffect} from 'react'
+// import { Button } from 'antd';
+
 // 标题组件
 const Title:React.FC<{title:string}>=({title="我是标题"})=>{
     return (
       <div className="title">
         {title}
+        {/* <Button type="primary">Button</Button> */}
       </div>
     )
 }
 /**
- * 计数器组件
- * @param param0 
+ * useReducer组件
  */
-type ArticleInfo = {
-  title: string,
-  content: string
-}
-const Article:React.FC<ArticleInfo> = ({ title, content }) => {
-  const [article, setArticle] = useState<ArticleInfo>({ title, content })
+const Week = () => {
+  console.log("我是day的我加载了")
+  type StateType = {
+    count: number,
+    name:string
+  }
+  type ActionType = {
+    type: 'add' | 'reduce' 
+    count: number,
+    name?:string
+  }
+  const initialState = { count: 0,name:"运算" }
+
+  function reducer(state: StateType, action: ActionType) {
+    switch (action.type) {
+      case 'add':
+        return { name:"正在进行加法计算", count: state.count + action.count }
+      case 'reduce':
+        return { name:"正在进行减法计算", count: state.count - action.count, }
+      default:
+        return state
+    }
+  }
+
+  const [state, dispatch] = useReducer(reducer,initialState)
+  useEffect(()=>{
+    console.log("我执行了00000")
+  },[state.name])
+
   return (
     <div className="component">
-      <Title title="useState对象组件" />
-      <p>Title: { article.title }</p>
-      <section>{ article.content }</section>
-      <button onClick={() => setArticle({
-        title: '下一篇',
-        content: '下一篇的内容',
-      })}>
-        下一篇
-      </button>
+      <Title title="useEffect组件"/>
+      <p> Count: {state.count}</p>
+      <p>Name:{state.name}</p>
+      <button onClick={() => dispatch({type: 'add',count:20})}>-</button>
+      <button onClick={() => dispatch({type: 'reduce',count:10})}>+</button>
     </div>
-  )
+  );
 }
-export default Article
+export default Week
