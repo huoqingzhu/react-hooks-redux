@@ -1,21 +1,19 @@
-type StateType = {
-  isLogin:boolean,
-  count: number,
+
+import {createStore} from 'redux'
+interface State {
+  isLoading: boolean
 }
-type ActionType = {
-  type: 'login'|"outLogin"|"add"
+interface Action{
+  type: string, isLoading:boolean
 }
-const State = { isLogin:false,count: 1, }
-function reducer(state: StateType, action: ActionType) {
-  switch (action.type) {
-      case 'login':
-        return {...state, isLogin:true}
-      case 'outLogin':
-        return {...state, isLogin:false}
-      case "add":
-        return {...state,count:state.count+1}
-      default:
-        return state
+const data={ count: 0,isLoading:false }
+const Reducer = (state:State=data, action: Action) => {
+  switch(action.type) {
+    case "login":
+      return {...state,isLoading:action.isLoading}
+    default:
+      return state
   }
 }
-export {State,reducer}
+const store = createStore(Reducer)
+export default store

@@ -2,17 +2,18 @@ import React,{useState,useContext} from 'react'
 import { useHistory } from 'react-router-dom';
 import { Menu } from 'antd';
 import {children} from '../../router/index'
+import {Provider, useSelector , useDispatch} from 'react-redux'
+
 import "./head.scss"
-const Head=(props:{cx:any})=>{
+const Head=()=>{
   const [current, setCurrent] = useState<string>("/home/main"); 
-  const store:any = useContext(props.cx) 
+  const dispatch = useDispatch()
   const handleClick=(e:any)=>{
     setCurrent(e.key)
     history.push(`${e.key}`)
   };
   const out=()=>{
-    console.log("我执行了")
-    store.dispatch({type:"outLogin"})
+    dispatch({type:"login",isLoading:false})
   }
   let history = useHistory();
   return (

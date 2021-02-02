@@ -1,21 +1,17 @@
 import { useHistory} from 'react-router-dom';
-import {useContext,useEffect} from "react"
-import {CountContext} from "../../App"
+import { useSelector , useDispatch} from 'react-redux'
+
 const Login=()=>{
-console.log("我执行了")
-  const {dispatch,state}= useContext(CountContext) 
+  const count = useSelector((state:{count:number})=>state.count)
+  const dispatch = useDispatch()
   let history = useHistory();
   const goHome=()=>{
-    dispatch({type: 'login'})
+    dispatch({type:"login",isLoading:true})
+    history.push('/home')
   }
-  useEffect(() => {
-    if(state.isLogin){
-      history.push("/home")
-    }
-  }, [state.isLogin])
   return <div>
           <div onClick={goHome}> 登陆</div>
-          <div onClick={()=>dispatch({type: 'add'})}>Add</div>
+          <div >{count}</div>
         </div>
 }
 export default Login

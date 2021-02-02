@@ -2,8 +2,9 @@
 import React,{Suspense,lazy,useEffect,useContext}from 'react'
 import { HashRouter as Router, Route, Switch, Redirect,useHistory} from 'react-router-dom'
 import Head from '../components/head/head'//导航栏
-// const Login=lazy(()=>import("../view/login/index"))
-import {CountContext} from "../App"
+import {Provider, useSelector , useDispatch} from 'react-redux'
+
+
 // require.context加载文件生成路由配置
 const loadRoutes = (files: __WebpackModuleApi.RequireContext) =>
   files
@@ -15,13 +16,19 @@ const loadRoutes = (files: __WebpackModuleApi.RequireContext) =>
     .sort((prev:{sort:number}, next:{sort:number}) => {
       return prev.sort-next.sort//根据sort 排序
     });
-const children = loadRoutes(require.context("./home", false, /\.tsx$/));
-const RouteConfig = () => {
-  const store:any = useContext(CountContext) 
+  const children = loadRoutes(require.context("./home", false, /\.tsx$/));
+  const RouteConfig = () => {
   const History= useHistory()
+  const isLoading = useSelector((state:{isLoading:boolean})=>state.isLoading)
+  useEffect(()=>{
+    if(!isLoading){
+      console.log("没有登录")
+      History.push("/login")
+    }
+  },[isLoading])
   return (
     <Router>
-    <Head cx={CountContext}></Head>
+    <Head></Head>
       <Suspense fallback={<div>Loading...</div>}>
       <Switch>
           {children.map((item:any)=>{
@@ -30,8 +37,7 @@ const RouteConfig = () => {
           <Redirect to="/home/main" from="/home"></Redirect>
         </Switch>
       </Suspense>
-{/* <Route path="/login"  component={ Head }></Route> */}
-</Router>
+    </Router>
   )
 }
 export {RouteConfig,children}
