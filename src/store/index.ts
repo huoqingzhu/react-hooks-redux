@@ -6,7 +6,7 @@ interface State {
 interface Action{
   type: string, isLoading:boolean
 }
-const data={ count: 0,isLoading:false }
+const data={ count: 0,isLoading:false };
 const Reducer = (state:State=data, action: Action) => {
   switch(action.type) {
     case "login":

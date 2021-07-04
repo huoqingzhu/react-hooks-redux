@@ -2,7 +2,7 @@
 import React,{Suspense,lazy,useEffect,useContext}from 'react'
 import { HashRouter as Router, Route, Switch, Redirect,useHistory} from 'react-router-dom'
 import Head from '../components/head/head'//导航栏
-import {Provider, useSelector , useDispatch} from 'react-redux'
+import { useSelector} from 'react-redux'
 
 
 // require.context加载文件生成路由配置
@@ -23,7 +23,7 @@ const loadRoutes = (files: __WebpackModuleApi.RequireContext) =>
   useEffect(()=>{
     if(!isLoading){
       console.log("没有登录")
-      History.push("/login")
+      History.push({pathname:"/login",state:{id:3}})
     }
   },[isLoading])
   return (
